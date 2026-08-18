@@ -121,6 +121,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
     serializer_class = CartSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -132,6 +133,7 @@ class CartViewSet(viewsets.ModelViewSet):
 
 
 class CartItemViewSet(viewsets.ModelViewSet):
+    queryset = CartItem.objects.all() 
     serializer_class = CartItemSerializer
     permission_classes = [permissions.IsAuthenticated]
 

@@ -12,7 +12,7 @@ schema_view = get_schema_view(
         description="Документация API",
     ),
     public=True,
-    permission_classes=[permissions.AllowAny],  # <-- Исправлено: скобки квадратные []
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = i18n_patterns(

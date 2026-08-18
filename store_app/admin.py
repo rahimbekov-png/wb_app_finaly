@@ -1,7 +1,21 @@
 from django.contrib import admin
-from .models import (UserProfile, Category, Product,
-                      SubCategory, ProductImage, Review, Cart, CartItem)
+from .models import (
+    UserProfile, Category, Product,
+    SubCategory, ProductImage, Review, Cart, CartItem
+)
 from modeltranslation.admin import TranslationAdmin, TranslationInlineModelAdmin
+
+
+class TabbedTranslationMediaMixin:
+    class Media:
+        js = (
+            'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
+            'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
+            'modeltranslation/js/tabbed_translation_fields.js',
+        )
+        css = {
+            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
+        }
 
 
 class SubCategoryInline(admin.TabularInline, TranslationInlineModelAdmin):
@@ -15,51 +29,26 @@ class ProductImageInline(admin.TabularInline):
 
 
 @admin.register(Category)
-class CategoryAdmin(TranslationAdmin):
+class CategoryAdmin(TabbedTranslationMediaMixin, TranslationAdmin):
     inlines = [SubCategoryInline]
-
-    class Media:
-        js = (
-            'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
 
 
 @admin.register(Product)
-class ProductAdmin(TranslationAdmin):
+class ProductAdmin(TabbedTranslationMediaMixin, TranslationAdmin):
     inlines = [ProductImageInline]
-
-    class Media:
-        js = (
-            'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
 
 
 @admin.register(SubCategory)
-class SubCategoryAdmin(TranslationAdmin):
-    class Media:
-        js = (
-            'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js',
-            'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js',
-            'modeltranslation/js/tabbed_translation_fields.js',
-        )
-
-        css = {
-            'screen': ('modeltranslation/css/tabbed_translation_fields.css',),
-        }
+class SubCategoryAdmin(TabbedTranslationMediaMixin, TranslationAdmin):
+    pass
 
 
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = ['id', 'product']
+
+
+# Регистрация остальных моделей
 admin.site.register(UserProfile)
 admin.site.register(Review)
 admin.site.register(Cart)

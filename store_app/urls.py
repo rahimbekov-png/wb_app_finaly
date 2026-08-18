@@ -9,10 +9,10 @@ from .views import (UserProfileViewSet, CategoryListAPIView, LoginAPIView )
 
 router = routers.DefaultRouter()
 
-router.register(r'user', UserProfileViewSet)
-router.register(r'review', ReviewViewSet)
-router.register(r'cart', CartViewSet)
-router.register(r'cartitem', CartItemViewSet)
+router.register(prefix=r'user', viewset=UserProfileViewSet, basename='user')
+router.register(prefix=r'review', viewset=ReviewViewSet, basename='review')
+router.register(r'cart', CartViewSet, basename='cart')
+router.register(r'cartitem', CartItemViewSet, basename='cartitem')
 
 urlpatterns = [
     path('', include(router.urls)),
